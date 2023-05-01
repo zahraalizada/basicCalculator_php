@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Basic Number Guess App | PHP Projects</title>
+    <title>Basic Calculator | PHP Projects</title>
 
     <!--  Bootstrap Css  -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -18,52 +18,93 @@
             <div class="panel-group">
                 <div class="login card card-default">
                     <div class="card-header">
-                        <h3>Basic Number Guess App</h3>
+                        <h3>Basic Calculator App</h3>
                     </div>
                     <div class="card-body">
                         <form action="" method="post">
-
-                            <div class="row align-items-end">
-                                <div class="col-10">
+                            <div class="row">
+                                <div class="col-6">
                                     <div class="mb-3">
-                                        <label for="secondnumber" class="form-label">Number <small class="text-muted">(Number around 1-100)</small></label>
-                                        <input type="number" class="form-control" id="number" name="number"
-                                               aria-describedby="number" required="required">
+                                        <label for="firstnumber" class="form-label">First Number</label>
+                                        <input type="number" class="form-control" id="firstnumber" name="firstnumber"
+                                               aria-describedby="firstnumber" required="required">
                                     </div>
                                 </div>
-                                <div class="col-2">
-                                    <button type="submit" name="find-number" class="btn btn-primary mb-3">Find </button>
+                                <div class="col-6">
+                                    <div class="mb-3">
+                                        <label for="secondnumber" class="form-label">Second Number</label>
+                                        <input type="number" class="form-control" id="secondnumber" name="secondnumber"
+                                               aria-describedby="secondnumber" required="required">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="mb-3"></div>
+                            <div class="row align-items-end">
+                                <div class="col-9">
+                                    <div class="mb-3">
+                                        <label for="operation" class="form-label">Select Operation</label>
+                                        <select class="form-select" aria-label="operation" name="operation" required="required">
+                                            <option value="" selected>Open operation menu</option>
+                                            <option value="sum">Addition</option>
+                                            <option value="subs">Subtraction</option>
+                                            <option value="mult">Multiplication</option>
+                                            <option value="divis">Division</option>
+                                            <option value="perc">Percent</option>
+                                            <option value="pow">Pow</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-3">
+                                    <button type="submit" class="btn btn-primary mb-3">Calculate</button>
+                                </div>
+                            </div>
 
-                            <div>
-
-                                <?php
-
-                                session_start(); // start session
-                                if (!$_SESSION){ // session control
-                                    $_SESSION['randNumber'] = rand(1,5); // make session name randNUmber and assign rand num
-                                }
-                                if(isset($_POST['find-number'])){
-                                    $number = $_POST['number'];
-                                    if ($number > $_SESSION['randNumber']){
-                                        echo "<h4>Please <u class='text-primary'>reduce</u> the number</h4>";
-                                        echo "<h4>Last guess: <span class='text-danger'>".$number ."</span></h4>";
-
-                                    } elseif ($number < $_SESSION['randNumber']){
-                                        echo "<h4 >Please <u class='text-primary'>increase</u>  the number</h4>";
-                                        echo "<h4>Last guess: <span class='text-danger'>".$number ."</span></h4>";
-                                    } else{
-                                        echo "<h4 >Congratulations!</h4>";
-                                        echo "<h4>Number: <span class='text-success'>".$_SESSION['randNumber'] ."</span></h4>";
-                                        session_destroy();
-                                    }
-
-                                }
+                            <div class="mb-3">
 
 
-                                ?>
+                                             <?php
+                                             if ($_POST) {
+                                                 $firstnumber = $_POST['firstnumber'];
+                                                 $secondnumber = $_POST['secondnumber'];
+                                                 $operation = $_POST['operation'];
+
+                                                 if(!($operation == "")){
+                                                     switch ($operation){
+                                                         case "sum":
+                                                              $result = $firstnumber + $secondnumber;
+                                                             echo "<h4>Result: <span class='text-success'> $result </span></h4>";
+                                                             break;
+                                                         case "subs":
+                                                              $result = $firstnumber - $secondnumber;
+                                                             echo "<h4>Result: <span class='text-success'> $result </span></h4>";
+                                                             break;
+                                                         case "mult":
+                                                              $result = $firstnumber * $secondnumber;
+                                                             echo "<h4>Result: <span class='text-success'> $result </span></h4>";
+                                                             break;
+                                                         case "divis":
+                                                              $result = $firstnumber / $secondnumber;
+                                                             echo "<h4>Result: <span class='text-success'> $result </span></h4>";
+                                                             break;
+                                                         case "perc":
+                                                              $result = ($firstnumber * $secondnumber) / 100;
+                                                             echo "<h4>Result: <span class='text-success'> $result </span></h4>";
+                                                             break;
+                                                         case "pow":
+                                                              $result = pow($firstnumber,$secondnumber);
+                                                             echo "<h4>Result: <span class='text-success'> $result </span></h4>";
+                                                             break;
+                                                         default:
+                                                             echo "Sorry, there was a problem!";
+                                                     }
+                                                 } else{
+                                                     echo "Please select operation";
+                                                 }
+
+                                             }
+
+
+                                             ?>
+
 
 
                             </div>
